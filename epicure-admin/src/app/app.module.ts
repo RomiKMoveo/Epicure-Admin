@@ -22,12 +22,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 //import { GenericModalComponent } from './components/generic-modal/generic-modal.component';
-import { AppRoutingModule } from './app/app.routes';
-import { AppComponent } from './app/app.component';
-import { DishesComponent } from './app/components/dishes/dishes.component';
-import { RestaurantsComponent } from './app/components/restaurants/restaurants.component';
-import { ChefsComponent } from './app/components/chefs/chefs.component';
-import { HomePageComponent } from './app/pages/home-page/home-page.component';
+import { AppRoutingModule } from './app.routes';
+import { AppComponent } from './app.component';
+import { DishesComponent } from './components/dishes/dishes.component';
+import { RestaurantsComponent } from './components/restaurants/restaurants.component';
+import { ChefsComponent } from './components/chefs/chefs.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
 
 @NgModule({
   declarations: [
