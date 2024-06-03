@@ -10,10 +10,6 @@ import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chefs',
-  standalone: true,
-  imports: [
-    MatTableModule
-  ],
   templateUrl: './chefs.component.html',
   styleUrl: './chefs.component.scss'
 })

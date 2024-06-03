@@ -7,8 +7,6 @@ import { RestaurantsService } from '../../service/restaurant.service';
 
 @Component({
   selector: 'app-restaurants',
-  standalone: true,
-  imports: [],
   templateUrl: './restaurants.component.html',
   styleUrl: './restaurants.component.scss'
 })
