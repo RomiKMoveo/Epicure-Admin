@@ -1,5 +1,6 @@
-<div>chef!</div>
-
-<!-- <table mat-table [dataSource]="dataSource" mat-table matSort aria-label="Elements">
-
-  </table> -->
+<ng-container *ngIf ="dataLoaded">
+  <app-generic-table [pageTitle]="pageTitle" [data]="chefs" [columns]="columns" [columnDefs]="columnDefs"></app-generic-table>
+</ng-container>
+<p *ngIf ="!dataLoaded">
+loading....
+</p>

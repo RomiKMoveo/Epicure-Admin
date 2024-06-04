@@ -1,44 +1,42 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { IRestaurant } from '../interface/restaurant.interface';
+import { environment } from '../../environments/environment';
+
 
 
 @Injectable({
     providedIn: 'root'
 })
 export class RestaurantsService {
-    private apiUrl = 'http://localhost:3000/api' + '/restaurant';
-   
-    restaurantsUpdateEvent = new EventEmitter<IRestaurant[]>();
+  constructor(private http: HttpClient) {}
 
-    restaurants: IRestaurant[] = [];
-    constructor(private http: HttpClient) {
-        this.fetchRestaurants();
-    }
+  getAllRestaurants() {
+    return this.http.get<IRestaurant[]>(`${environment.baseURL}/restaurant`);
+  }
 
-    fetchRestaurants() {
-        //need to check why using API_URL.chefs not working
-        this.http.get(this.apiUrl).subscribe((restaurants) => {
-            console.log("Restaurants", restaurants)
-            //this.restaurants = restaurants;
-            // this.restaurantsUpdateEvent.emit(restaurants);
-        })
-    }
+  addRestaurant(obj: any) {
+    console.log(obj);
+    return this.http.post(
+      `${environment.baseURL}/restaurant`,
+      obj
+    );
+  }
 
-    // updateRestaurant(restaurant: IRestaurant) {
-    //     //need to check why using API_URL.chefs not working
-    //     this.http.put(`http://127.0.0.1:3000/restaurants/${restaurant._id}`, restaurant).subscribe((responseRestaurant: IRestaurant) => {
-    //         console.log("response put restaurant", responseRestaurant);
-    //         this.fetchRestaurants();
-    //     })
-    // }
+  updateRestaurant(id: string, obj: any) {
+    console.log(id, obj);
+    return this.http.put(
+      `${environment.baseURL}/restaurant/${id}`,
+      obj
+    );
+  }
 
-    // postRestaurant(restaurant: IRestaurant) {
-    //     //need to check why using API_URL.chefs not working
-    //     this.http.post('http://127.0.0.1:3000/restaurants', restaurant).subscribe((responseRestaurant: IRestaurant) => {
-    //         console.log("response post restaurant", responseRestaurant);
-    //         this.fetchRestaurants();
-    //     })
-    // }
+  deleteRestaurant(id: string) {
+    console.log(id);
+    return this.http.delete(
+      `${environment.baseURL}/restaurant/${id}`
+    );
+  }
+
+  
 }

@@ -1,1 +1,7 @@
-<p>dishes works!</p>
+
+<ng-container *ngIf ="dataLoaded">
+    <app-generic-table [pageTitle]="pageTitle" [data]="dishes" [columns]="columns" [columnDefs]="columnDefs"></app-generic-table>
+</ng-container>
+<p *ngIf ="!dataLoaded">
+  loading....
+</p>

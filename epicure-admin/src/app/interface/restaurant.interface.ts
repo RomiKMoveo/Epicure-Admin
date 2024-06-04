@@ -1,6 +1,7 @@
 import { IChef } from "./chef.interface";
 import { IDish } from "./dish.interface";
 
+
 export interface IRestaurant extends Document {
     _id: string;
     title: string;
@@ -10,4 +11,5 @@ export interface IRestaurant extends Document {
     dishes: IDish[];
     isPopular: boolean;
   }
+  
   

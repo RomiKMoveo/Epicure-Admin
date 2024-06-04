@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 import { ChefsComponent } from './components/chefs/chefs.component';
 import { DishesComponent } from './components/dishes/dishes.component';
+import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 
 export const routes: Routes = [
     {

@@ -1,5 +1,7 @@
-<div class="container-lg">
-    <button type="button" class="btn btn-primary">
-      New Restaurant
-    </button>
-   
+
+<ng-container *ngIf ="dataLoaded">
+    <app-generic-table [pageTitle]="pageTitle" [data]="restaurants" [columns]="columns" [columnDefs]="columnDefs"></app-generic-table>
+</ng-container>
+<p *ngIf ="!dataLoaded">
+  loading....
+</p>
