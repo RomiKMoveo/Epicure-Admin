@@ -3,11 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { GenericDialogComponen } from '../../generic-dialog/generic-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RestaurantService } from '../../service/restaurant.service';
 import { ChefService } from '../../service/chef.service';
 import { DishService } from '../../service/dish.service';
+import { GenericDialogComponen } from '../../generic-dialog/generic-dialog.component';
 
 @Component({
   selector: 'app-generic-table',
@@ -43,28 +43,23 @@ export class GenericTableComponent implements OnInit {
   }
   
   getElementVal(element: any, column: any) {
-      if (column === 'dishes') {
-        let dishesStr: string = '';
-        for (let index = 0; index < element.dishes.length; index++) {
-          dishesStr = dishesStr + element.dishes[index].title + ' ';
-        }
-        return dishesStr == ''?  'No dishes info': dishesStr;
-
-      }else if (column === 'chef') {
-        return element.chef?.title || 'No chef info';  
-      
-      }else if (column === 'restaurant') {
-        return element.restaurant?.title || 'No restaurant info'; 
-
-      }else if (column === 'restaurants') {
-        let restaurantsStr: string = '';
-        for (let index = 0; index < element.restaurants.length; index++) {
-          restaurantsStr = restaurantsStr + element.restaurants[index].title + ' ';
-        }
-        return restaurantsStr == ''?  'No dishes info': restaurantsStr;
-
-      
-      } else {
+    if (column === 'dishes') {
+      let dishesStr: string = '';
+      for (let index = 0; index < element.dishes.length; index++) {
+        dishesStr = dishesStr + element.dishes[index].title + ' ';
+      }
+      return dishesStr === '' ? 'No dishes info' : dishesStr;
+    } else if (column === 'chef') {
+      return element.chef?.title || 'No chef info';  
+    } else if (column === 'restaurant') {
+      return element.restaurant?.title || 'No restaurant info'; 
+    } else if (column === 'restaurants') {
+      let restaurantsStr: string = '';
+      for (let index = 0; index < element.restaurants.length; index++) {
+        restaurantsStr = restaurantsStr + element.restaurants[index].title + ' ';
+      }
+      return restaurantsStr === '' ? 'No restaurants info' : restaurantsStr;
+    } else {
       return null;
     }
   }
@@ -79,54 +74,62 @@ export class GenericTableComponent implements OnInit {
     this.editedData = {};
   }
 
-  async submitEdit() {
-    switch (this.pageTitle) {
-      case 'Restaurant':
-        await this.restaurantService.updateRestaurant(this.editedData._id, this.editedData);
-        break;
+  async saveEdit() {
+    try {
+      switch (this.pageTitle) {
+        case 'Restaurant':
+          await this.restaurantService.updateRestaurant(this.editedData._id, this.editedData);
+          break;
         case 'Chef':
-        await this.chefService.updateChef(this.editedData._id, this.editedData);
-        break;
-      case 'Dish':
-        await this.dishService.updateDish(this.editedData._id, this.editedData);
-        break;
+          await this.chefService.updateChef(this.editedData._id, this.editedData);
+          break;
+        case 'Dish':
+          await this.dishService.updateDish(this.editedData._id, this.editedData);
+          break;
+      }
+      const index = this.data.findIndex(item => item._id === this.editedData._id);
+      if (index !== -1) {
+        this.data[index] = this.editedData;
+        this.dataSource.data = [...this.data];
+      }
+      this.cancelEdit();
+    } catch (error) {
+      console.error('Error updating the item:', error);
     }
-    const index = this.data.findIndex(item => item._id === this.editedData._id);
-    if (index !== -1) {
-      this.data[index] = this.editedData;
-      this.dataSource.data = [...this.data];
-    }
-    this.cancelEdit();
   }
 
   async delete(elementID: string) {
-    console.log('Delete', elementID);
-    console.log('model', this.pageTitle);
-
-    switch (this.pageTitle) {
-      case 'Restaurant':
-        console.log('Restaurant deleted');
-        await this.restaurantService.deleteRestaurant(elementID);
-        break;
-      case 'Chef':
-        console.log('Chef deleted');
-        this.chefService.deleteChef(elementID);
-        break;
-      case 'Dishe':
-        console.log('Dishe deleted');
-        this.dishService.deleteDish(elementID);
-        break;
+    try {
+      switch (this.pageTitle) {
+        case 'Restaurant':
+          await this.restaurantService.deleteRestaurant(elementID);
+          break;
+        case 'Chef':
+          await this.chefService.deleteChef(elementID);
+          break;
+        case 'Dish':
+          await this.dishService.deleteDish(elementID);
+          break;
+      }
+      this.data = this.data.filter(r => r._id !== elementID);
+      this.dataSource.data = [...this.data];
+    } catch (error) {
+      console.error('Error deleting the item:', error);
     }
-    this.data = this.data.filter(r => r._id !== elementID);
-    this.dataSource.data = [...this.data];
-
   }
   
   add() {
-    console.log('Add');
-    const dialogRef = this.dialog.open(GenericDialogComponen);
+    const dialogRef = this.dialog.open(GenericDialogComponen, {
+      width: '400px',
+      data: {
+        columns: this.columns,
+        columnDefs: this.columnDefs,
+        pageTitle: this.pageTitle
+      }
+    });
 
   }
+
   returnToHomePage(): void {
     this.router.navigate(['../']);
   }
@@ -140,4 +143,3 @@ export class GenericTableComponent implements OnInit {
   //   }
   // }
 }
-

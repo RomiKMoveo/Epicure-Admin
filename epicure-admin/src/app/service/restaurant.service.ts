@@ -38,30 +38,25 @@ export class RestaurantService {
         )
       );
       this.setRestaurants(result);  
-      console.log(result);
           
       this.isloading.next(true);
     } catch (error) {
       this.isloading.next(false);
-      console.log(error);
     }
   }
 
-  addRestaurant(obj: any) {
-    console.log(obj);
-    return this.http.post(
-      `${environment.baseURL}/restaurant`,
-      obj
-    );
+  async addRestaurant(restaurant: IRestaurant) {
+    try {
+      const newRestaurant = await firstValueFrom(
+        this.http.post(`${environment.baseURL}/restaurant`, restaurant)
+      );
+      if (newRestaurant) {
+        alert('Restaurant has been successfully added');
+        this.featchAllRestuarants();
+      }
+    } catch (error) {
+    }
   }
-
-  // updateRestaurant(id: string, obj: any) {
-  //   console.log(id, obj);
-  //   return this.http.put(
-  //     `${environment.baseURL}/restaurant/${id}`,
-  //     obj
-  //   );
-  // }
 
   async deleteRestaurant(id: string) {
     try {
@@ -71,7 +66,6 @@ export class RestaurantService {
       alert('Chef has been successfully deleted');
       this.featchAllRestuarants();
     } catch (error) {
-      console.log(error);
     }
   }
 
@@ -83,10 +77,9 @@ export class RestaurantService {
 
       if (updatedRestaurant) {
         alert('Restaurant has been successfully updated');
-        this.featchAllRestuarants();
+        //this.featchAllRestuarants();
       }
     } catch (error) {
-      console.log(error);
     }
   }
 

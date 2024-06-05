@@ -36,17 +36,14 @@ export class ChefService {
         )
       );
       this.setChefs(result);  
-      console.log(result);
           
       this.isloading.next(true);
     } catch (error) {
       this.isloading.next(false);
-      console.log(error);
     }
   }
 
   addChef(obj: any) {
-    console.log(obj);
     return this.http.post(
       `${environment.baseURL}/chef`,
       obj
@@ -61,7 +58,6 @@ export class ChefService {
       alert('Chef has been successfully deleted');
       this.featchAllChefs();
     } catch (error) {
-      console.log(error);
     }
   }
 
@@ -76,7 +72,6 @@ export class ChefService {
         this.featchAllChefs();
       }
     } catch (error) {
-      console.log(error);
     }
   }
 

@@ -35,17 +35,14 @@ export class DishService {
         )
       );
       this.setDishes(result);  
-      console.log(result);
           
       this.isloading.next(true);
     } catch (error) {
       this.isloading.next(false);
-      console.log(error);
     }
   }
 
   addDish(obj: any) {
-    console.log(obj);
     return this.http.post(
       `${environment.baseURL}/dish`,
       obj
@@ -60,7 +57,6 @@ export class DishService {
       alert('Chef has been successfully deleted');
       this.featchAllDishes();
     } catch (error) {
-      console.log(error);
     }
   }
 
@@ -75,7 +71,6 @@ export class DishService {
         this.featchAllDishes();
       }
     } catch (error) {
-      console.log(error);
     }
   }
 

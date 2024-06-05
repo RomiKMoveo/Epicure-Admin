@@ -42,22 +42,5 @@ export class RestaurantsComponent implements OnInit, OnChanges {
       this.restaurants = response;
     });
   }
-  // addRestaurant(restaurant: IRestaurant) {
-  //   if (restaurant._id === "") {
-  //     this.restaurantsService.addRestaurant(restaurant).subscribe((newRestaurant) => {
-  //       //this.restaurants.push(newRestaurant);
-  //       this.updateTableData();
-  //     });
-  //   } else {
-  //     this.restaurantsService.updateRestaurant(restaurant._id, restaurant).subscribe(() => {
-  //       const index = this.restaurants.findIndex(r => r._id === restaurant._id);
-  //       if (index !== -1) {
-  //         this.restaurants[index] = restaurant;
-  //         this.updateTableData();
-  //       }
-  //     });
-  //   }
-  //   this.showModal = false;
-  // }
-
+  
 }

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
-@use './app/style/variables.scss' as *;;
+@use './app/style/variables.scss' as *;
 
 h1 {
     color: $ice;
@@ -21,7 +21,7 @@ h1 {
     @include main-font;
   }
   button {
-    background-color:$normal-light;
+    background-color:$flying;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -37,8 +37,8 @@ h1 {
     color: $white;
   }
   button:disabled {
-    background-color: $normal-light;
-    color: $gray-dark;
+    background-color: hsl(0, 7%, 86%);
+    color: $gray;
     cursor: auto;
   }
   
