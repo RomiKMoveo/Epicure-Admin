@@ -1,0 +1,10 @@
+<form novalidate>
+  First Name:<br>
+  <input type="text" ng-model="user.firstName"><br>
+  Last Name:<br>
+  <input type="text" ng-model="user.lastName">
+  <br><br>
+  <!-- <button ng-click="submitForm()">SUBMIT</button> -->
+  <button class="add-button" mat-button type="submit">Submit</button>
+  <button class="cancel-button" mat-button type="button" (click)="closeDialog()">Cancel</button>
+</form>

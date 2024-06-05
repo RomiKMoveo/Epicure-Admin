@@ -29,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GenericTableComponent } from './components/generic-table/generic-table.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { GenericDialogComponen } from './generic-dialog/generic-dialog.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatChipsModule } from '@angular/material/chips';
     RestaurantsComponent,
     ChefsComponent,
     GenericTableComponent,
-    HomePageComponent
+    HomePageComponent,
+    GenericDialogComponen
   ],
   imports: [
     BrowserModule,
@@ -46,8 +48,6 @@ import { MatChipsModule } from '@angular/material/chips';
     HttpClientModule,
     CommonModule,
     MatTableModule,
-    ReactiveFormsModule,
-    FormsModule,
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
@@ -64,6 +64,8 @@ import { MatChipsModule } from '@angular/material/chips';
     BrowserAnimationsModule,
     MatChipsModule,
     MatProgressBarModule,
+    FormsModule,
+    ReactiveFormsModule
     
   ],
   providers: [provideAnimationsAsync()],

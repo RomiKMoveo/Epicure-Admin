@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IRestaurant } from '../../interface/restaurant.interface';
-import { RestaurantsService } from '../../service/restaurant.service';
+import { RestaurantService } from '../../service/restaurant.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { RestaurantsService } from '../../service/restaurant.service';
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.scss']
 })
-export class RestaurantsComponent implements OnInit {
+export class RestaurantsComponent implements OnInit, OnChanges {
   pageTitle: string = "Restaurant";
   restaurants: IRestaurant[] = [];
   columns: string[] = ['_id', 'title', 'image', 'stars', 'dishes', 'chef', 'isPopular', 'actions'];
@@ -23,56 +24,40 @@ export class RestaurantsComponent implements OnInit {
     actions: 'Actions'
   };
 
-  dataLoaded: boolean = false;
-
-  editMode: string = "add";
-  message: string | undefined;
-  editRestaurant?: IRestaurant;
+  isLoading!: Observable<boolean>;
   showModal: boolean = false;
   showDeleteModal: boolean = false;
-  deletedRestaurantId: string | undefined;
 
 
-  constructor(private restaurantsService: RestaurantsService
-  ) { }
+  constructor( private restaurantsService: RestaurantService ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
-    this.restaurantsService.getAllRestaurants().subscribe((data: IRestaurant[]) => {
-      this.restaurants = data;
-      console.log(this.restaurants);
-      this.dataLoaded = true;
-    });
-
-  }
-  addRestaurant(restaurant: IRestaurant) {
-    if (restaurant._id === "") {
-      this.restaurantsService.addRestaurant(restaurant).subscribe((newRestaurant) => {
-        //this.restaurants.push(newRestaurant);
-        this.updateTableData();
-      });
-    } else {
-      this.restaurantsService.updateRestaurant(restaurant._id, restaurant).subscribe(() => {
-        const index = this.restaurants.findIndex(r => r._id === restaurant._id);
-        if (index !== -1) {
-          this.restaurants[index] = restaurant;
-          this.updateTableData();
-        }
-      });
-    }
-    this.showModal = false;
-  }
-
-  deleteRestaurant(restaurant: IRestaurant) {
-    this.restaurantsService.deleteRestaurant(restaurant._id).subscribe(() => {
-      this.restaurants = this.restaurants.filter(r => r._id !== restaurant._id);
-      this.updateTableData();
-      this.showDeleteModal = false;
+    this.isLoading = this.restaurantsService.getIsLoading();
+    this.restaurantsService.featchAllRestuarants();
+    this.restaurantsService.getAllRestaurants().subscribe((response) => {
+      this.restaurants = response;
     });
   }
-
-  updateTableData() {
-    // This will trigger the data update in the generic table
-    this.restaurants = [...this.restaurants];
-  }
+  // addRestaurant(restaurant: IRestaurant) {
+  //   if (restaurant._id === "") {
+  //     this.restaurantsService.addRestaurant(restaurant).subscribe((newRestaurant) => {
+  //       //this.restaurants.push(newRestaurant);
+  //       this.updateTableData();
+  //     });
+  //   } else {
+  //     this.restaurantsService.updateRestaurant(restaurant._id, restaurant).subscribe(() => {
+  //       const index = this.restaurants.findIndex(r => r._id === restaurant._id);
+  //       if (index !== -1) {
+  //         this.restaurants[index] = restaurant;
+  //         this.updateTableData();
+  //       }
+  //     });
+  //   }
+  //   this.showModal = false;
+  // }
 
 }

@@ -1,7 +1,8 @@
 
-<ng-container *ngIf ="dataLoaded">
-    <app-generic-table [pageTitle]="pageTitle" [data]="dishes" [columns]="columns" [columnDefs]="columnDefs"></app-generic-table>
+<ng-container *ngIf ="(isLoading | async)">
+  <app-generic-table [pageTitle]="pageTitle" [data]="dishes" [columns]="columns" [columnDefs]="columnDefs"></app-generic-table>
 </ng-container>
-<p *ngIf ="!dataLoaded">
-  loading....
-</p>
+
+<ng-template #loading>
+<p>Loading...</p>
+</ng-template>

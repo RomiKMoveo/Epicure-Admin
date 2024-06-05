@@ -1,12 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
+@use './app/style/variables.scss' as *;;
+
 h1 {
-    color: #369;
+    color: $ice;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 250%;
   }
   h2, h3 {
-    color: #444;
+    color: $gray-dark;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: lighter;
     text-align: center;
@@ -15,15 +17,15 @@ h1 {
     margin: 2em;
   }
   body, input[type="text"], button {
-    color: #333;
-    font-family: Cambria, Georgia, serif;
+    color: $gray-dark;
+    @include main-font;
   }
   button {
-    background-color: #eee;
+    background-color:$normal-light;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    color: black;
+    color: $black;
     font-size: 1.2rem;
     padding: 1rem;
     margin-right: 1rem;
@@ -31,12 +33,12 @@ h1 {
     margin-top: 1rem;
   }
   button:hover {
-    background-color: black;
-    color: white;
+    background-color: $black;
+    color: $white;
   }
   button:disabled {
-    background-color: #eee;
-    color: #aaa;
+    background-color: $normal-light;
+    color: $gray-dark;
     cursor: auto;
   }
   

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IDish } from '../../interface/dish.interface';
 import { DishService } from '../../service/dish.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dishes',
@@ -10,7 +11,7 @@ import { DishService } from '../../service/dish.service';
 export class DishesComponent {
   pageTitle: string = "Dishe";
   dishes: IDish[] = [];
-  columns: string[] = ['_id', 'title', 'image', 'price', 'ingredients', 'tag', 'restaurants', 'actions'];
+  columns: string[] = ['_id', 'title', 'image', 'price', 'ingredients', 'tag', 'isSignature', 'restaurant', 'actions'];
   columnDefs = {
     _id: 'ID',
     title: 'Title',
@@ -18,53 +19,23 @@ export class DishesComponent {
     price: 'Price',
     ingredients: 'Ingredients',
     tag: 'Tag',
-    restaurant: 'Restaurants',
+    isSignature: 'IsSignature',
+    restaurant: 'Restaurant',
     actions: 'Actions'
   };
 
-  dataLoaded: boolean = false;
+  isLoading!: Observable<boolean>;
+  showModal: boolean = false;
+  showDeleteModal: boolean = false;
 
-  constructor(private dishService: DishService
-  ) { }
+  constructor( private dishService: DishService ) { }
 
   ngOnInit(): void {
-    this.dishService.getAllDishes().subscribe((data: IDish[]) => {
-      this.dishes = data;
-      console.log(this.dishes);
-      this.dataLoaded = true;
+    this.isLoading = this.dishService.getIsLoading();
+    this.dishService.featchAllDishes();
+    this.dishService.getAllDishes().subscribe((response) => {
+      this.dishes = response;
     });
-
   }
-  addChef(restaurant: IDish) {
-    // if (restaurant._id === "") {
-      //this.chefService.(restaurant).subscribe((newRestaurant) => {
-        //this.restaurants.push(newRestaurant);
-        //this.updateTableData();
-      //});
-    // } else {
-    //   this.restaurantsService.updateRestaurant(restaurant._id, restaurant).subscribe(() => {
-    //     const index = this.restaurants.findIndex(r => r._id === restaurant._id);
-    //     if (index !== -1) {
-    //       this.restaurants[index] = restaurant;
-    //       this.updateTableData();
-    //     }
-    //   });
-    // }
-    // this.showModal = false;
-  }
-
-  deleteChef(restaurant: IDish) {
-    // this.chefService.deleteRestaurant(restaurant._id).subscribe(() => {
-    //   this.restaurants = this.restaurants.filter(r => r._id !== restaurant._id);
-    //   this.updateTableData();
-    //   this.showDeleteModal = false;
-    // });
-  }
-
-  updateTableData() {
-    // This will trigger the data update in the generic table
-    this.dishes = [...this.dishes];
-  }
-
-
+  
 }
