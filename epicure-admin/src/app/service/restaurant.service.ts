@@ -20,7 +20,6 @@ export class RestaurantService {
   }
 
   getAllRestaurants() {
-    //return this.http.get<IRestaurant[]>(`${environment.baseURL}/restaurant`);
     return this.restaurants;
   }
  
@@ -77,7 +76,6 @@ export class RestaurantService {
 
       if (updatedRestaurant) {
         alert('Restaurant has been successfully updated');
-        //this.featchAllRestuarants();
       }
     } catch (error) {
     }

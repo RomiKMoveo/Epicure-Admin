@@ -42,9 +42,6 @@ export class GenericTableComponent implements OnInit {
   ngOnInit() {
     this.displayedColumns = this.columns;
     this.dataSource = new MatTableDataSource(this.data);
-    console.log(this.columnTypes);
-    console.log(this.columnDefs);
-    
   }
   
   getElementVal(element: any, column: any) {
@@ -144,13 +141,4 @@ export class GenericTableComponent implements OnInit {
   returnToHomePage(): void {
     this.router.navigate(['../']);
   }
-
-  // searchByTitle(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
 }

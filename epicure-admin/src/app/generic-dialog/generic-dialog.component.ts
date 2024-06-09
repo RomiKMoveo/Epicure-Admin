@@ -69,7 +69,6 @@ export class GenericDialogComponen {
           this.dialogRef.close(formData);
           break;
         case 'Dish':
-          console.log("submitForm")  
         formData = this.form.value as IDish;
           this.dishService.addDish(formData);
           this.closeDialog();

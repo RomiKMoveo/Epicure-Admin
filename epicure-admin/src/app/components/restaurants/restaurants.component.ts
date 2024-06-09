@@ -48,11 +48,6 @@ export class RestaurantsComponent implements OnInit {
     this.columnDropdown['dishes'] = this.dishesOptions;
     await this.fetchChefs();
     this.columnDropdown['chef'] = this.chefsOptions;
-    console.log(this.columnDropdown['dishes']);
-    console.log(this.chefsOptions);
-    
-    
-  
   }
 
   async fetchDishes() {
