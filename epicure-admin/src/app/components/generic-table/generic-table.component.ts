@@ -42,9 +42,6 @@ export class GenericTableComponent implements OnInit {
   ngOnInit() {
     this.displayedColumns = this.columns;
     this.dataSource = new MatTableDataSource(this.data);
-    console.log(this.columnTypes);
-    console.log(this.columnDefs);
-    
   }
   
   getElementVal(element: any, column: any) {
