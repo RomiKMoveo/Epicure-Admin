@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+/* Application-wide Styles */
+@use './app/style/variables.scss' as *;
+
+h1 {
+    color: $ice;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
+  }
+  h2, h3 {
+    color: $gray-dark;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    text-align: center;
+  }
+  body {
+    margin: 2em;
+  }
+  body, input[type="text"], button {
+    color: $gray-dark;
+    @include main-font;
+  }
+  button {
+    background-color:$flying;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: $black;
+    font-size: 1.2rem;
+    padding: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+  button:hover {
+    background-color: $gray-light;
+    color: $white;
+  }
+  button:disabled {
+    background-color: hsl(0, 7%, 86%);
+    color: $gray;
+    cursor: auto;
+  }
+  
+  /* everywhere else */
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

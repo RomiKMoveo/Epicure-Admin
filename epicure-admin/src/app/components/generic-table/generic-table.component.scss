@@ -1,0 +1,66 @@
+@use '../../style/variables' as *;
+
+.table-container{
+  margin: 20px;
+  border: 1px solid $white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba($black, 0.1);
+  text-align: center;
+  
+  .table-title{
+    @include main-font;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+
+  .mat-elevation-z8 {
+    width: 100%;
+
+    th {
+      @include main-font;
+      font-weight: 600;
+      font-size: medium;
+    }
+
+    td {
+      @include main-font;
+      font-size: medium;
+    }
+
+    .img {
+      border-radius: 50%;
+      height: 200px;
+      width: 300px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: row;
+      align-items: start;
+      justify-content: start;
+      gap: 20px;
+
+      button {
+        @include main-font;
+      }
+    }
+    
+    .end-of-page-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      
+      button {
+        @include main-font;
+      }
+    }
+  }
+
+  mat-paginator {
+    @include main-font;
+    font-size: small;
+    font-weight: 500;
+  }
+}

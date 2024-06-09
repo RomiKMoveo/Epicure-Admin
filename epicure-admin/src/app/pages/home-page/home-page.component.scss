@@ -1,0 +1,29 @@
+@use '../../style/variables' as *;
+
+.admin-container {
+    text-align: center;
+    padding-top: 40px;
+
+    h1 {
+        @include main-font;
+        color: $gray-dark;
+        font-size: 72px;
+        padding: 30px;
+    }
+
+    .button-container {
+        margin: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 40px;
+
+        button {
+            @include main-font;
+            font-size: 18px;
+            width: 30%;
+            height: 60px;
+        }
+    }
+}

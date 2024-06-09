@@ -1,0 +1,51 @@
+<h2 mat-dialog-title>Add New {{ data.pageTitle }}</h2>
+<form [formGroup]="form" (ngSubmit)="submitForm()">
+  <div *ngFor="let column of data.columns">
+    <ng-container *ngIf="column !== '_id' && column !== 'actions'">
+    
+      <ng-container [ngSwitch]="data.columnTypes[column]">
+        <mat-form-field *ngSwitchCase="'dropdown'">
+          <mat-label>{{ data.columnDefs[column] }}</mat-label>
+          <mat-select [formControlName]="column" name="icon">
+            @for (option of data.columnDropdown[column]; track option) {
+              <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngSwitchCase="'multipleSelection'">
+          <mat-label>{{ data.columnDefs[column] }}</mat-label>
+          <mat-select [formControlName]="column" multiple>
+            @for (option of data.columnDropdown[column]; track option) {
+              <mat-option [value]="option.value">{{option.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngSwitchCase="'text'" appearance="fill">
+          <mat-label>{{ data.columnDefs[column] }}</mat-label>
+          <input matInput [formControlName]="column">
+        </mat-form-field>
+     
+
+      <mat-form-field *ngSwitchCase="'slideToggle'" appearance="fill">
+        <mat-label>{{ data.columnDefs[column] }}</mat-label>
+        <input matInput [formControlName]="column">
+      </mat-form-field>
+
+      <mat-form-field *ngSwitchCase="'number'" appearance="fill">
+        <mat-label>{{ data.columnDefs[column] }}</mat-label>
+        <input matInput [formControlName]="column">
+      </mat-form-field>
+      
+      <input *ngSwitchDefault matInput [formControlName]="column">
+
+    </ng-container>
+   
+    </ng-container>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="submit" color="primary">Submit</button>
+    <button mat-button type="button" (click)="closeDialog()">Cancel</button>
+  </div>
+</form> 
