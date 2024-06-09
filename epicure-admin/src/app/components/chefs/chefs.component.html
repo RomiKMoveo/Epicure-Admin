@@ -1,5 +1,5 @@
 <ng-container *ngIf ="(isLoading | async)">
-  <app-generic-table [pageTitle]="pageTitle" [data]="chefs" [columns]="columns" [columnDefs]="columnDefs" [columnTypes]="columnTypes"></app-generic-table>
+  <app-generic-table [pageTitle]="pageTitle" [data]="chefs" [columns]="columns" [columnDefs]="columnDefs" [columnTypes]="columnTypes" [columnDropdown]="columnDropdown"></app-generic-table>
 </ng-container>
 
 <ng-template #loading>

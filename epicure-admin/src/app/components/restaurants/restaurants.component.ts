@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { IRestaurant } from '../../interface/restaurant.interface';
-import { RestaurantService } from '../../service/restaurant.service';
 import { Observable } from 'rxjs';
-import { columnDefs, columnTypes, columns, columnDropdown } from '../../constants/restaurrantData';
-import { DishService } from '../../service/dish.service';
+
+import { IRestaurant } from '../../interface/restaurant.interface';
 import { IDish } from '../../interface/dish.interface';
 import { IChef } from '../../interface/chef.interface';
+import { RestaurantService } from '../../service/restaurant.service';
+import { DishService } from '../../service/dish.service';
 import { ChefService } from '../../service/chef.service';
-
+import { columnDefs, columnTypes, columns, columnDropdown } from '../../constants/restaurrantData';
 
 @Component({
   selector: 'app-restaurants',
@@ -15,28 +15,22 @@ import { ChefService } from '../../service/chef.service';
   styleUrls: ['./restaurants.component.scss']
 })
 export class RestaurantsComponent implements OnInit {
+  isLoading!: Observable<boolean>;
   pageTitle: string = "Restaurant";
   restaurants: IRestaurant[] = [];
   columns: string[] = columns;
   columnDefs = columnDefs;
   columnTypes = columnTypes;
   columnDropdown = columnDropdown
-  isLoading!: Observable<boolean>;
-  showModal: boolean = false;
-  showDeleteModal: boolean = false;
   dishes: IDish[] = [];
   dishesOptions: { value: string; viewValue: string }[] = [];
   chefs: IChef[] = [];
   chefsOptions: { value: string; viewValue: string }[] = [];
 
-  
-
-
   constructor( private restaurantsService: RestaurantService,
     private dishService: DishService,
     private chefService: ChefService
    ) { }
-
 
   async ngOnInit(): Promise<void> {
     this.isLoading = this.restaurantsService.getIsLoading();
@@ -58,11 +52,8 @@ export class RestaurantsComponent implements OnInit {
           value: dish._id,
           viewValue: dish.title
         }));
-  
       });
-      
     }
-    
 
   async fetchChefs() {
     await this.chefService.featchAllChefs();
@@ -72,9 +63,6 @@ export class RestaurantsComponent implements OnInit {
         value: chef._id,
         viewValue: chef.title
       }));
-
-    });
-    
-  }
-  
+    }); 
+  } 
 }

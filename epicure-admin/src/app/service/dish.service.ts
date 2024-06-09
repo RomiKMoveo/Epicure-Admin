@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { IChef } from '../interface/chef.interface';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
+
 import { IDish } from '../interface/dish.interface';
 import { environment } from '../../environments/environment';
 
@@ -12,7 +12,7 @@ export class DishService {
   private dishes = new BehaviorSubject<IDish[]>([]);
   private isloading = new BehaviorSubject<boolean>(false);
     
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private setDishes(dishes: any) {
     this.dishes.next(dishes);
@@ -30,12 +30,8 @@ export class DishService {
     this.isloading.next(false);
     try {
       const result = await firstValueFrom(
-        this.http.get<{ restaurants: IDish[] }>(
-          `${environment.baseURL}/dish`
-        )
-      );
-      this.setDishes(result);  
-          
+      this.http.get<{ restaurants: IDish[] }>( `${environment.baseURL}/dish` ));
+      this.setDishes(result);      
       this.isloading.next(true);
     } catch (error) {
       this.isloading.next(false);
@@ -43,15 +39,12 @@ export class DishService {
   }
 
   addDish(dish: IDish) {
-    return this.http.post(
-      `${environment.baseURL}/dish`, dish );
+    return this.http.post( `${environment.baseURL}/dish`, dish );
   }
 
   async deleteDish(id: string) {
     try {
-      await firstValueFrom(
-        this.http.delete(`${environment.baseURL}/dish/${id}`)
-      );
+      await firstValueFrom( this.http.delete(`${environment.baseURL}/dish/${id}` ));
       alert('Chef has been successfully deleted');
       this.featchAllDishes();
     } catch (error) {
@@ -71,6 +64,4 @@ export class DishService {
     } catch (error) {
     }
   }
-
-  
 }

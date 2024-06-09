@@ -135,7 +135,6 @@ export class GenericTableComponent implements OnInit {
         columnDropdown: this.columnDropdown
       }
     });
-
   }
 
   returnToHomePage(): void {

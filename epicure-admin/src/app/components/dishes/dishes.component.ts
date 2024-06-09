@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { IDish } from '../../interface/dish.interface';
 import { DishService } from '../../service/dish.service';
-import { Observable } from 'rxjs';
-import { columnDefs, columnTypes, columns } from '../../constants/dishData';
-
+import { columnDefs, columnTypes, columns, columnDropdown} from '../../constants/dishData';
 
 @Component({
   selector: 'app-dishes',
@@ -11,18 +11,15 @@ import { columnDefs, columnTypes, columns } from '../../constants/dishData';
   styleUrl: './dishes.component.scss'
 })
 export class DishesComponent {
+  isLoading!: Observable<boolean>;
   pageTitle: string = "Dishe";
   dishes: IDish[] = [];
   columns: string[] = columns;
   columnDefs = columnDefs;
   columnTypes = columnTypes;
+  columnDropdown = columnDropdown;
 
-  
-  isLoading!: Observable<boolean>;
-  showModal: boolean = false;
-  showDeleteModal: boolean = false;
-
-  constructor( private dishService: DishService ) { }
+  constructor( private dishService: DishService ) {}
 
   ngOnInit(): void {
     this.isLoading = this.dishService.getIsLoading();
@@ -31,5 +28,4 @@ export class DishesComponent {
       this.dishes = response;
     });
   }
-  
 }

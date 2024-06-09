@@ -1,11 +1,10 @@
 
 import { Component } from '@angular/core';
-import { IChef } from '../../interface/chef.interface';
-import { ChefService } from '../../service/chef.service';
 import { Observable } from 'rxjs';
 
-import { columnDefs, columnTypes, columns } from '../../constants/chefData';
-
+import { IChef } from '../../interface/chef.interface';
+import { ChefService } from '../../service/chef.service';
+import { columnDefs, columnTypes, columns, columnDropdown } from '../../constants/chefData';
 
 @Component({
   selector: 'app-chefs',
@@ -13,17 +12,15 @@ import { columnDefs, columnTypes, columns } from '../../constants/chefData';
   styleUrl: './chefs.component.scss'
 })
 export class ChefsComponent {
+  isLoading!: Observable<boolean>;
   pageTitle: string = "Chef";
   chefs: IChef[] = [];
   columns: string[] = columns;
   columnDefs = columnDefs;
   columnTypes = columnTypes;
-
-  isLoading!: Observable<boolean>;
-  showModal: boolean = false;
-  showDeleteModal: boolean = false;
-
-  constructor(private chefService: ChefService) { }
+  columnDropdown = columnDropdown;
+  
+  constructor(private chefService: ChefService) {}
 
   ngOnInit(): void {
     this.isLoading = this.chefService.getIsLoading();
@@ -31,8 +28,5 @@ export class ChefsComponent {
     this.chefService.getAllChefs().subscribe((response) => {
       this.chefs = response;
     });
-
   }
-
-
 }

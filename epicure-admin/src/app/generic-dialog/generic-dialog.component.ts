@@ -1,14 +1,13 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { IRestaurant } from '../interface/restaurant.interface';
 import { IChef } from '../interface/chef.interface';
 import { IDish } from '../interface/dish.interface';
 import { RestaurantService } from '../service/restaurant.service';
 import { DishService } from '../service/dish.service';
 import { ChefService } from '../service/chef.service';
-import { IconMeaning } from '../interface/dish.interface';
-
 
 @Component({
   selector: 'app-generic-dialog',
@@ -19,18 +18,8 @@ export class GenericDialogComponen {
   form: FormGroup;
   defaultValues: Partial<IRestaurant> = {
     title: '',
-    image: '',
-    
+    image: '', 
   };
-
-  iconMeaning = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'},
-  ];
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
-
 
   constructor(
     public dialogRef: MatDialogRef<GenericDialogComponen>,
@@ -74,7 +63,6 @@ export class GenericDialogComponen {
           this.closeDialog();
           break;
       }
-      
     }
   }
 

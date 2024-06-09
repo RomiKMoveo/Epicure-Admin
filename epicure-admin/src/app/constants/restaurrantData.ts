@@ -1,4 +1,5 @@
 export const columns: string[] = ['_id', 'title', 'image', 'stars', 'dishes', 'chef', 'isPopular', 'actions'];
+
 export const columnDefs = {
   _id: 'ID',
   title: 'Title',
@@ -9,6 +10,7 @@ export const columnDefs = {
   isPopular: 'Popular',
   actions: 'Actions'
 };
+
 export const columnTypes = {
   title: 'text',
   image: 'text',
