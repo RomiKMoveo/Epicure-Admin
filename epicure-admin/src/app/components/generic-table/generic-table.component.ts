@@ -43,31 +43,29 @@ export class GenericTableComponent implements OnInit {
     this.displayedColumns = this.columns;
     this.dataSource = new MatTableDataSource(this.data);
   }
-  
+
   getElementVal(element: any, column: any) {
-    if (column === 'dishes') {
-      let dishesStr: string = '';
-      for (let index = 0; index < element.dishes.length; index++) {
-        dishesStr = dishesStr + element.dishes[index].title + ' ';
-      }
-      return dishesStr === '' ? 'No dishes info' : dishesStr;
-    
-    } else if (column === 'chef') {
-      return element.chef?.title || 'No chef info';  
-    
-    } else if (column === 'restaurant') {
-      return element.restaurant?.title || 'No restaurant info'; 
-    
-    } else if (column === 'restaurants') {
-      let restaurantsStr: string = '';
-      for (let index = 0; index < element.restaurants.length; index++) {
-        restaurantsStr = restaurantsStr + element.restaurants[index].title + ' ';
-      }
-      return restaurantsStr === '' ? 'No restaurants info' : restaurantsStr;
-    
-    } else {
-      return null;
+    let str: string = '';
+    switch (column) {
+      case 'dishes':
+        return this.getValuesFromElemArr(element.dishes, column);
+      case 'chef':
+        return element.chef?.title || 'No chef info';
+      case 'restaurant':
+        return element.restaurant?.title || 'No restaurant info';
+      case 'restaurants':
+        return this.getValuesFromElemArr(element.restaurants, column);
+      default:
+        return null;
     }
+  }
+  getValuesFromElemArr(element: any, column: string): string {
+    let str: string = '';
+    for (let index = 0; index <  element.length; index++) {
+      str += element[index].title + ', ';
+    }
+    str = str.slice(0, -2);
+    return str === '' ? 'No ' + column + ' info' : (str);
   }
 
   edit(element: any) {
