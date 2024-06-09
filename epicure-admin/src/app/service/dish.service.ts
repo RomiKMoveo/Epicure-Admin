@@ -42,11 +42,9 @@ export class DishService {
     }
   }
 
-  addDish(obj: any) {
+  addDish(dish: IDish) {
     return this.http.post(
-      `${environment.baseURL}/dish`,
-      obj
-    );
+      `${environment.baseURL}/dish`, dish );
   }
 
   async deleteDish(id: string) {

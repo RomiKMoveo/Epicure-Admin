@@ -4,7 +4,7 @@ import { IChef } from '../../interface/chef.interface';
 import { ChefService } from '../../service/chef.service';
 import { Observable } from 'rxjs';
 
-
+import { columnDefs, columnTypes, columns } from '../../constants/chefData';
 
 
 @Component({
@@ -15,22 +15,15 @@ import { Observable } from 'rxjs';
 export class ChefsComponent {
   pageTitle: string = "Chef";
   chefs: IChef[] = [];
-  columns: string[] = ['_id', 'title', 'image', 'description', 'restaurants', 'chefOfTheWeek', 'actions'];
-  columnDefs = {
-    _id: 'ID',
-    title: 'Title',
-    image: 'Image',
-    description: 'Description',
-    restaurants: 'Restaurants',
-    chefOfTheWeek: 'ChefOfTheWeek',
-    actions: 'Actions'
-  };
+  columns: string[] = columns;
+  columnDefs = columnDefs;
+  columnTypes = columnTypes;
 
   isLoading!: Observable<boolean>;
   showModal: boolean = false;
   showDeleteModal: boolean = false;
-  
-  constructor( private chefService: ChefService ) { }
+
+  constructor(private chefService: ChefService) { }
 
   ngOnInit(): void {
     this.isLoading = this.chefService.getIsLoading();
@@ -40,6 +33,6 @@ export class ChefsComponent {
     });
 
   }
-  
+
 
 }

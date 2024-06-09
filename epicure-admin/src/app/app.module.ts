@@ -35,11 +35,11 @@ import { GenericDialogComponen } from './generic-dialog/generic-dialog.component
 @NgModule({
   declarations: [
     AppComponent,
+    HomePageComponent,
     DishesComponent,
     RestaurantsComponent,
     ChefsComponent,
     GenericTableComponent,
-    HomePageComponent,
     GenericDialogComponen
   ],
   imports: [
@@ -65,8 +65,7 @@ import { GenericDialogComponen } from './generic-dialog/generic-dialog.component
     MatChipsModule,
     MatProgressBarModule,
     FormsModule,
-    ReactiveFormsModule
-    
+    ReactiveFormsModule,
   ],
   providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],

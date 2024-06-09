@@ -19,6 +19,8 @@ export class GenericTableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() columns: string[] = [];
   @Input() columnDefs: { [key: string]: string } = {};
+  @Input() columnTypes: {[key: string]: string } = {};
+  @Input() columnDropdown = {};
 
   displayedColumns: string[] = [];
   dataSource = new MatTableDataSource(this.data);
@@ -40,6 +42,9 @@ export class GenericTableComponent implements OnInit {
   ngOnInit() {
     this.displayedColumns = this.columns;
     this.dataSource = new MatTableDataSource(this.data);
+    console.log(this.columnTypes);
+    console.log(this.columnDefs);
+    
   }
   
   getElementVal(element: any, column: any) {
@@ -49,16 +54,20 @@ export class GenericTableComponent implements OnInit {
         dishesStr = dishesStr + element.dishes[index].title + ' ';
       }
       return dishesStr === '' ? 'No dishes info' : dishesStr;
+    
     } else if (column === 'chef') {
       return element.chef?.title || 'No chef info';  
+    
     } else if (column === 'restaurant') {
       return element.restaurant?.title || 'No restaurant info'; 
+    
     } else if (column === 'restaurants') {
       let restaurantsStr: string = '';
       for (let index = 0; index < element.restaurants.length; index++) {
         restaurantsStr = restaurantsStr + element.restaurants[index].title + ' ';
       }
       return restaurantsStr === '' ? 'No restaurants info' : restaurantsStr;
+    
     } else {
       return null;
     }
@@ -124,7 +133,9 @@ export class GenericTableComponent implements OnInit {
       data: {
         columns: this.columns,
         columnDefs: this.columnDefs,
-        pageTitle: this.pageTitle
+        pageTitle: this.pageTitle,
+        columnTypes: this.columnTypes,
+        columnDropdown: this.columnDropdown
       }
     });
 

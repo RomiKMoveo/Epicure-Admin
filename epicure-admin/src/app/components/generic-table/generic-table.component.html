@@ -56,7 +56,7 @@
               <th mat-header-cell *matHeaderCellDef> {{ columnDefs[column] }} </th>
               <td mat-cell *matCellDef="let element" class="dynamic-td">
                 <ng-container *ngIf="editingElementId !== element._id; else editField">
-                  {{ getElementVal(element, column) }}
+                  {{ getElementVal(element, column) || element[column] }}
                 </ng-container>
                 <ng-template #editField>
                   <input matInput [(ngModel)]="editedData[column]">

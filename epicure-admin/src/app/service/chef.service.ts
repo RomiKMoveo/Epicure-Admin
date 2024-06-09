@@ -43,11 +43,9 @@ export class ChefService {
     }
   }
 
-  addChef(obj: any) {
+  addChef(chef: IChef) {
     return this.http.post(
-      `${environment.baseURL}/chef`,
-      obj
-    );
+      `${environment.baseURL}/chef`, chef );
   }
 
   async deleteChef(id: string) {

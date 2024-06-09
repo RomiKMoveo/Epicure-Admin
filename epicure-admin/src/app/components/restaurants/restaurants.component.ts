@@ -1,7 +1,12 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IRestaurant } from '../../interface/restaurant.interface';
 import { RestaurantService } from '../../service/restaurant.service';
 import { Observable } from 'rxjs';
+import { columnDefs, columnTypes, columns, columnDropdown } from '../../constants/restaurrantData';
+import { DishService } from '../../service/dish.service';
+import { IDish } from '../../interface/dish.interface';
+import { IChef } from '../../interface/chef.interface';
+import { ChefService } from '../../service/chef.service';
 
 
 @Component({
@@ -9,38 +14,72 @@ import { Observable } from 'rxjs';
   templateUrl: './restaurants.component.html',
   styleUrls: ['./restaurants.component.scss']
 })
-export class RestaurantsComponent implements OnInit, OnChanges {
+export class RestaurantsComponent implements OnInit {
   pageTitle: string = "Restaurant";
   restaurants: IRestaurant[] = [];
-  columns: string[] = ['_id', 'title', 'image', 'stars', 'dishes', 'chef', 'isPopular', 'actions'];
-  columnDefs = {
-    _id: 'ID',
-    title: 'Title',
-    image: 'Image',
-    stars: 'Stars',
-    dishes: 'Dishes',
-    chef: 'Chef',
-    isPopular: 'Popular',
-    actions: 'Actions'
-  };
-
+  columns: string[] = columns;
+  columnDefs = columnDefs;
+  columnTypes = columnTypes;
+  columnDropdown = columnDropdown
   isLoading!: Observable<boolean>;
   showModal: boolean = false;
   showDeleteModal: boolean = false;
+  dishes: IDish[] = [];
+  dishesOptions: { value: string; viewValue: string }[] = [];
+  chefs: IChef[] = [];
+  chefsOptions: { value: string; viewValue: string }[] = [];
+
+  
 
 
-  constructor( private restaurantsService: RestaurantService ) { }
+  constructor( private restaurantsService: RestaurantService,
+    private dishService: DishService,
+    private chefService: ChefService
+   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    throw new Error('Method not implemented.');
-  }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.isLoading = this.restaurantsService.getIsLoading();
     this.restaurantsService.featchAllRestuarants();
     this.restaurantsService.getAllRestaurants().subscribe((response) => {
-      this.restaurants = response;
+    this.restaurants = response;
     });
+    await this.fetchDishes();
+    this.columnDropdown['dishes'] = this.dishesOptions;
+    await this.fetchChefs();
+    this.columnDropdown['chef'] = this.chefsOptions;
+    console.log(this.columnDropdown['dishes']);
+    console.log(this.chefsOptions);
+    
+    
+  
+  }
+
+  async fetchDishes() {
+      await this.dishService.featchAllDishes();
+      this.dishService.getAllDishes().subscribe((response) => {
+        this.dishes = response;
+        this.dishesOptions = this.dishes.map(dish => ({
+          value: dish._id,
+          viewValue: dish.title
+        }));
+  
+      });
+      
+    }
+    
+
+  async fetchChefs() {
+    await this.chefService.featchAllChefs();
+    this.chefService.getAllChefs().subscribe((response) => {
+      this.chefs = response;
+      this.chefsOptions = this.chefs.map(chef => ({
+        value: chef._id,
+        viewValue: chef.title
+      }));
+
+    });
+    
   }
   
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IDish } from '../../interface/dish.interface';
 import { DishService } from '../../service/dish.service';
 import { Observable } from 'rxjs';
+import { columnDefs, columnTypes, columns } from '../../constants/dishData';
+
 
 @Component({
   selector: 'app-dishes',
@@ -11,19 +13,11 @@ import { Observable } from 'rxjs';
 export class DishesComponent {
   pageTitle: string = "Dishe";
   dishes: IDish[] = [];
-  columns: string[] = ['_id', 'title', 'image', 'price', 'ingredients', 'tag', 'isSignature', 'restaurant', 'actions'];
-  columnDefs = {
-    _id: 'ID',
-    title: 'Title',
-    image: 'Image',
-    price: 'Price',
-    ingredients: 'Ingredients',
-    tag: 'Tag',
-    isSignature: 'IsSignature',
-    restaurant: 'Restaurant',
-    actions: 'Actions'
-  };
+  columns: string[] = columns;
+  columnDefs = columnDefs;
+  columnTypes = columnTypes;
 
+  
   isLoading!: Observable<boolean>;
   showModal: boolean = false;
   showDeleteModal: boolean = false;

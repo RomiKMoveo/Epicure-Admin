@@ -48,7 +48,7 @@ export class RestaurantService {
   async addRestaurant(restaurant: IRestaurant) {
     try {
       const newRestaurant = await firstValueFrom(
-        this.http.post(`${environment.baseURL}/restaurant`, restaurant)
+        this.http.post(`${environment.baseURL}restaurant`, restaurant)
       );
       if (newRestaurant) {
         alert('Restaurant has been successfully added');

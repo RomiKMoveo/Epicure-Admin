@@ -7,6 +7,8 @@ import { IDish } from '../interface/dish.interface';
 import { RestaurantService } from '../service/restaurant.service';
 import { DishService } from '../service/dish.service';
 import { ChefService } from '../service/chef.service';
+import { IconMeaning } from '../interface/dish.interface';
+
 
 @Component({
   selector: 'app-generic-dialog',
@@ -18,8 +20,17 @@ export class GenericDialogComponen {
   defaultValues: Partial<IRestaurant> = {
     title: '',
     image: '',
-    // add other default values for IRestaurant fields here
+    
   };
+
+  iconMeaning = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'},
+  ];
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+
 
   constructor(
     public dialogRef: MatDialogRef<GenericDialogComponen>,
@@ -45,6 +56,7 @@ export class GenericDialogComponen {
   submitForm() {
     if (this.form.valid) {
       let formData;
+
       switch (this.data.pageTitle) {
         case 'Restaurant':
           formData = this.form.value as IRestaurant;
@@ -53,12 +65,14 @@ export class GenericDialogComponen {
           break;
         case 'Chef':
           formData = this.form.value as IChef;
-          
+          this.chefService.addChef(formData);
           this.dialogRef.close(formData);
           break;
         case 'Dish':
-          formData = this.form.value as IDish;
-          this.dialogRef.close(formData);
+          console.log("submitForm")  
+        formData = this.form.value as IDish;
+          this.dishService.addDish(formData);
+          this.closeDialog();
           break;
       }
       
