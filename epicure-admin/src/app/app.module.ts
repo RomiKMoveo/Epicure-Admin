@@ -30,6 +30,7 @@ import { GenericTableComponent } from './components/generic-table/generic-table.
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { GenericDialogComponen } from './generic-dialog/generic-dialog.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { GenericDialogComponen } from './generic-dialog/generic-dialog.component
     RestaurantsComponent,
     ChefsComponent,
     GenericTableComponent,
-    GenericDialogComponen
+    GenericDialogComponen,
+    LoginPageComponent
   ],
   imports: [
     BrowserModule,
