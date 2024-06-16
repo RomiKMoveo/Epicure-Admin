@@ -1,38 +1,53 @@
 @use '../../style/variables' as *;
 
-.table-container{
+.table-container {
   margin: 20px;
   border: 1px solid $white;
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba($black, 0.1);
+  border-radius: 8px;  
   text-align: center;
-  
-  .table-title{
+
+  .table-title {
     @include main-font;
     text-align: center;
-    font-size: 30px;
+    font-size: 40px;
     margin-bottom: 20px;
+    color: $water-light;
+  }
+
+  button {
+    margin: 10px;
+    @include main-font;
+    font-size: 16px;
+    color: $water;
   }
 
   .mat-elevation-z8 {
     width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      @include main-font;
+      font-size: medium;
+      padding: 12px 15px;
+      border: 1px solid $black;
+    }
 
     th {
-      @include main-font;
       font-weight: 600;
-      font-size: medium;
+      background-color: $water-light;
+      color: $white;
     }
 
     td {
-      @include main-font;
-      font-size: medium;
+      background-color: $white;
+      color: $black;
     }
 
     .img {
       border-radius: 50%;
-      height: 200px;
-      width: 300px;
+      height: 50px;
+      width: 50px;
     }
 
     .button-container {
@@ -40,18 +55,31 @@
       flex-direction: row;
       align-items: start;
       justify-content: start;
-      gap: 20px;
+      gap: 10px;
 
       button {
+        margin: 10px;
         @include main-font;
+        font-size: 16px;
+        color: $water;
       }
     }
-    
+
+    tr {
+      &:nth-child(even) {
+        background-color: $normal-light;
+      }
+
+      &:hover {
+        background-color: $steel-light;
+      }
+    }
+
     .end-of-page-button-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      
+
       button {
         @include main-font;
       }

@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Add New {{ data.pageTitle }}</h2>
 <form [formGroup]="form" (ngSubmit)="submitForm()">
   <div *ngFor="let column of data.columns">
-    <ng-container *ngIf="column !== '_id' && column !== 'actions'">
+    <ng-container *ngIf="column !== '_id' && column !== 'actions' && data.columnTypes[column] !== 'dontInclude' ">
     
       <ng-container [ngSwitch]="data.columnTypes[column]">
         <mat-form-field *ngSwitchCase="'dropdown'">
@@ -21,23 +21,22 @@
             }
           </mat-select>
         </mat-form-field>
+        
+        <div *ngSwitchCase="'slideToggle'">
+          <mat-slide-toggle [formControlName]="column">{{ data.columnDefs[column] }}</mat-slide-toggle>
+        </div>
 
         <mat-form-field *ngSwitchCase="'text'" appearance="fill">
           <mat-label>{{ data.columnDefs[column] }}</mat-label>
           <input matInput [formControlName]="column">
         </mat-form-field>
      
-
-      <mat-form-field *ngSwitchCase="'slideToggle'" appearance="fill">
-        <mat-label>{{ data.columnDefs[column] }}</mat-label>
-        <input matInput [formControlName]="column">
-      </mat-form-field>
-
       <mat-form-field *ngSwitchCase="'number'" appearance="fill">
         <mat-label>{{ data.columnDefs[column] }}</mat-label>
         <input matInput [formControlName]="column">
       </mat-form-field>
       
+     
       <input *ngSwitchDefault matInput [formControlName]="column">
 
     </ng-container>

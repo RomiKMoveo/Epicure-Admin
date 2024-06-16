@@ -16,10 +16,8 @@ import { ChefService } from '../service/chef.service';
 })
 export class GenericDialogComponen {
   form: FormGroup;
-  defaultValues: Partial<IRestaurant> = {
-    title: '',
-    image: '', 
-  };
+  editRow: boolean = false;
+  editedData: any;
 
   constructor(
     public dialogRef: MatDialogRef<GenericDialogComponen>,
@@ -34,32 +32,59 @@ export class GenericDialogComponen {
   }
 
   initializeForm() {
+    this.editRow = this.data.editRow;
+    const editedData = this.data.editedData || {};
+  
     this.data.columns.forEach((column: string) => {
       if (column !== '_id' && column !== 'actions') {
-        const defaultValue = this.defaultValues[column as keyof IRestaurant] || '';
-        this.form.addControl(column, this.fb.control(defaultValue, Validators.required));
+        let defaultValue = editedData[column] || '';
+  
+        let controlConfig = [Validators.required];
+  
+        if (this.data.columnTypes[column] === 'slideToggle') {
+          defaultValue = defaultValue || false; // Initialize slide toggle as false if no default value
+        }
+  
+        this.form.addControl(column, this.fb.control(defaultValue, controlConfig));
       }
     });
   }
-
+  
   submitForm() {
     if (this.form.valid) {
       let formData;
-
       switch (this.data.pageTitle) {
         case 'Restaurant':
           formData = this.form.value as IRestaurant;
-          this.restaurantService.addRestaurant(formData)
+          
+          if(this.editRow) {
+            this.restaurantService.updateRestaurant(this.data.editingElementId, formData);
+          } else {
+            this.restaurantService.addRestaurant(formData);
+          }
+          
           this.dialogRef.close(formData);
           break;
         case 'Chef':
           formData = this.form.value as IChef;
-          this.chefService.addChef(formData);
+          
+          if(this.editRow) {
+            this.chefService.updateChef(this.data.editingElementId, formData);
+          } else {
+            this.chefService.addChef(formData);
+          }
+        
           this.dialogRef.close(formData);
           break;
         case 'Dish':
-        formData = this.form.value as IDish;
-          this.dishService.addDish(formData);
+          formData = this.form.value as IDish;
+          
+          if(this.editRow) {
+            this.dishService.updateDish(this.data.editingElementId, formData);
+          } else {
+            this.dishService.addDish(formData);
+          }
+
           this.closeDialog();
           break;
       }

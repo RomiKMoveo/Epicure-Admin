@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule, DatePipe } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -31,7 +31,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { GenericDialogComponen } from './generic-dialog/generic-dialog.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-
+import { AuthGuard } from './authentication/auth.guard';
+import {MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule} from '@angular/material/slide-toggle';
+import { ConfirmationDialogComponent } from './components/generic-table/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     ChefsComponent,
     GenericTableComponent,
     GenericDialogComponen,
-    LoginPageComponent
+    LoginPageComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -68,8 +71,15 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     MatProgressBarModule,
     FormsModule,
     ReactiveFormsModule,
+    MatSlideToggleModule,
+    _MatSlideToggleRequiredValidatorModule,
+    DatePipe,
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [
+    provideAnimationsAsync(),
+    AuthGuard,
+  ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

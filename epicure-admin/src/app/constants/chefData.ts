@@ -14,15 +14,19 @@ actions: 'Actions'
   title: 'text',
   image: 'text',
   description: 'text',
-  restaurants: 'multipleSelection',
+  restaurants: 'dontInclude',
   chefOfTheWeek: 'slideToggle'
 };
 
+const chefOfTheWeekOption = [
+{ value: 'true', viewValue: "yes" },
+{ value: 'false', viewValue: "no" }
+];
 export const columnDropdown: {
-  restaurants: {
+  chefOfTheWeek: {
     value: string;
     viewValue: string;
   }[];
 } = {
-  restaurants: []
+  chefOfTheWeek: chefOfTheWeekOption,
 };

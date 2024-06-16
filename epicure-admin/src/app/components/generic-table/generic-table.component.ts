@@ -8,6 +8,8 @@ import { RestaurantService } from '../../service/restaurant.service';
 import { ChefService } from '../../service/chef.service';
 import { DishService } from '../../service/dish.service';
 import { GenericDialogComponen } from '../../generic-dialog/generic-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+
 
 @Component({
   selector: 'app-generic-table',
@@ -19,7 +21,7 @@ export class GenericTableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() columns: string[] = [];
   @Input() columnDefs: { [key: string]: string } = {};
-  @Input() columnTypes: {[key: string]: string } = {};
+  @Input() columnTypes: { [key: string]: string } = {};
   @Input() columnDropdown = {};
 
   displayedColumns: string[] = [];
@@ -42,6 +44,12 @@ export class GenericTableComponent implements OnInit {
   ngOnInit() {
     this.displayedColumns = this.columns;
     this.dataSource = new MatTableDataSource(this.data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  formatId(id: string): string {
+    return `${id.substring(0, 5)}****...`;
   }
 
   getElementVal(element: any, column: any) {
@@ -59,18 +67,30 @@ export class GenericTableComponent implements OnInit {
         return null;
     }
   }
+  
   getValuesFromElemArr(element: any, column: string): string {
     let str: string = '';
-    for (let index = 0; index <  element.length; index++) {
+    for (let index = 0; index < element.length; index++) {
       str += element[index].title + ', ';
     }
     str = str.slice(0, -2);
-    return str === '' ? 'No ' + column + ' info' : (str);
+    return str === '' ? 'No ' + column + ' info' : str;
   }
 
   edit(element: any) {
-    this.editingElementId = element._id;
-    this.editedData = { ...element };
+    const dialogRef = this.dialog.open(GenericDialogComponen, {
+      width: '500px',
+      data: {
+        editRow: true,
+        columns: this.columns,
+        columnDefs: this.columnDefs,
+        pageTitle: this.pageTitle,
+        columnTypes: this.columnTypes,
+        columnDropdown: this.columnDropdown,
+        editingElementId: this.editingElementId,
+        editedData: this.editedData
+      }
+    });
   }
 
   cancelEdit() {
@@ -103,29 +123,36 @@ export class GenericTableComponent implements OnInit {
   }
 
   async delete(elementID: string) {
-    try {
-      switch (this.pageTitle) {
-        case 'Restaurant':
-          await this.restaurantService.deleteRestaurant(elementID);
-          break;
-        case 'Chef':
-          await this.chefService.deleteChef(elementID);
-          break;
-        case 'Dish':
-          await this.dishService.deleteDish(elementID);
-          break;
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent);
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result) {
+        try {
+          switch (this.pageTitle) {
+            case 'Restaurant':
+              await this.restaurantService.deleteRestaurant(elementID);
+              break;
+            case 'Chef':
+              await this.chefService.deleteChef(elementID);
+              break;
+            case 'Dish':
+              await this.dishService.deleteDish(elementID);
+              break;
+          }
+          this.data = this.data.filter(r => r._id !== elementID);
+          this.dataSource.data = [...this.data];
+        } catch (error) {
+          console.error('Error deleting the item:', error);
+        }
       }
-      this.data = this.data.filter(r => r._id !== elementID);
-      this.dataSource.data = [...this.data];
-    } catch (error) {
-      console.error('Error deleting the item:', error);
-    }
+    });
   }
   
   add() {
     const dialogRef = this.dialog.open(GenericDialogComponen, {
-      width: '400px',
+      width: '500px',
       data: {
+        editRow: false,
         columns: this.columns,
         columnDefs: this.columnDefs,
         pageTitle: this.pageTitle,

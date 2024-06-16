@@ -5,7 +5,7 @@ import { ChefsComponent } from './components/chefs/chefs.component';
 import { DishesComponent } from './components/dishes/dishes.component';
 import { RestaurantsComponent } from './components/restaurants/restaurants.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './authentication/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
@@ -13,7 +13,7 @@ export const routes: Routes = [
   { path: 'dishes', component: DishesComponent, canActivate: [AuthGuard] },
   { path: 'restaurants', component: RestaurantsComponent, canActivate: [AuthGuard] },
   { path: 'chefs', component: ChefsComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: '' } // Redirect unknown paths to home
+  //{ path: '**', redirectTo: '' } 
 ];
 
 @NgModule({

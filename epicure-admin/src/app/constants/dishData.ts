@@ -30,8 +30,13 @@ const tagOptions = [
   { value: IconMeaning.VEGI, viewValue: "Vegi" },
 ];
 
+const isSignatureOptions = [
+  { value: 'true', viewValue: "yes" },
+  { value: 'false', viewValue: "no" }
+];
+
 export const columnDropdown: {
-  tagOptions: {
+  tag: {
     value: string;
     viewValue: string;
   }[];
@@ -39,7 +44,12 @@ export const columnDropdown: {
     value: string;
     viewValue: string;
   }[];
+  isSignature: {
+    value: string;
+    viewValue: string;
+  }[];
 } = {
-  tagOptions: [],
-  restaurant: []
+  tag: tagOptions,
+  restaurant: [],
+  isSignature: isSignatureOptions,
 };

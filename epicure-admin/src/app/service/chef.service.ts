@@ -43,9 +43,18 @@ export class ChefService {
     }
   }
 
-  addChef(chef: IChef) {
-    return this.http.post(
-      `${environment.baseURL}/chef`, chef );
+  async addChef(chef: IChef) {
+    try {
+      const newChef = await firstValueFrom(
+        this.http.post(`${environment.baseURL}/chef`, chef)
+      );
+      if (newChef) {
+        alert('Restaurant has been successfully added');
+        this.featchAllChefs();
+      }
+    } catch (error) {
+    }
+    
   }
 
   async deleteChef(id: string) {

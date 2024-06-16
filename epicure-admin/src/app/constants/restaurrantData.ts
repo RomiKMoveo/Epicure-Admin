@@ -30,6 +30,12 @@ const starsOptions = [
 
 ];
 
+const isPopularOptions = [
+  { value: 'true', viewValue: "yes" },
+  { value: 'false', viewValue: "no" }
+
+];
+
 export const columnDropdown: {
   stars: {
     value: number;
@@ -43,8 +49,13 @@ export const columnDropdown: {
     value: string;
     viewValue: string;
   }[];
+  isPopular: {
+    value: string;
+    viewValue: string;
+  }[];
 } = {
   stars: starsOptions,
   chef: [],
-  dishes: []
+  dishes: [],
+  isPopular: isPopularOptions
 };
