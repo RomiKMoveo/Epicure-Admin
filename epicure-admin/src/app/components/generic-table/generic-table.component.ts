@@ -10,7 +10,6 @@ import { DishService } from '../../service/dish.service';
 import { GenericDialogComponen } from '../../generic-dialog/generic-dialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
-
 @Component({
   selector: 'app-generic-table',
   templateUrl: './generic-table.component.html',
@@ -63,8 +62,14 @@ export class GenericTableComponent implements OnInit {
         return element.restaurant?.title || 'No restaurant info';
       case 'restaurants':
         return this.getValuesFromElemArr(element.restaurants, column);
+      case 'isPopular':
+        return element[column];
+      case 'chefOfTheWeek':
+        return element[column];
+      case 'isSignature':
+      return element[column];
       default:
-        return null;
+        return element[column] || 'No data';
     }
   }
   
@@ -78,6 +83,9 @@ export class GenericTableComponent implements OnInit {
   }
 
   edit(element: any) {
+    this.editingElementId = element._id;
+    this.editedData = { ...element };
+
     const dialogRef = this.dialog.open(GenericDialogComponen, {
       width: '500px',
       data: {
@@ -91,35 +99,46 @@ export class GenericTableComponent implements OnInit {
         editedData: this.editedData
       }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result);
+        this.saveEdit(result, this.editedData._id);
+
+      }
+    });
   }
 
-  cancelEdit() {
-    this.editingElementId = null;
-    this.editedData = {};
-  }
-
-  async saveEdit() {
+  async saveEdit(updatedData: any, elementID: string) {
+    console.log(elementID);
+    
     try {
       switch (this.pageTitle) {
         case 'Restaurant':
-          await this.restaurantService.updateRestaurant(this.editedData._id, this.editedData);
+          await this.restaurantService.updateRestaurant(elementID, updatedData);
+          await this.restaurantService.featchAllRestuarants();
           break;
         case 'Chef':
-          await this.chefService.updateChef(this.editedData._id, this.editedData);
+          await this.chefService.updateChef(elementID, updatedData);
           break;
         case 'Dish':
-          await this.dishService.updateDish(this.editedData._id, this.editedData);
+          await this.dishService.updateDish(elementID, updatedData);
           break;
       }
-      const index = this.data.findIndex(item => item._id === this.editedData._id);
+      const index = this.data.findIndex(item => item._id === elementID);
       if (index !== -1) {
-        this.data[index] = this.editedData;
+        this.data[index] = updatedData;
         this.dataSource.data = [...this.data];
       }
       this.cancelEdit();
     } catch (error) {
       console.error('Error updating the item:', error);
     }
+  }
+
+  cancelEdit() {
+    this.editingElementId = null;
+    this.editedData = {};
   }
 
   async delete(elementID: string) {
@@ -158,6 +177,13 @@ export class GenericTableComponent implements OnInit {
         pageTitle: this.pageTitle,
         columnTypes: this.columnTypes,
         columnDropdown: this.columnDropdown
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.data.push(result);
+        this.dataSource.data = [...this.data];
       }
     });
   }

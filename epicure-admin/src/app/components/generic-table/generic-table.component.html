@@ -13,26 +13,14 @@
     <!-- Title Column -->
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef > Title </th>
-      <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="editingElementId !== element._id; else editTitle">
-          {{element.title}}
-        </ng-container>
-        <ng-template #editTitle>
-          <input matInput [(ngModel)]="editedData.title">
-        </ng-template>
-      </td>
+      <td mat-cell *matCellDef="let element">{{element.title}}</td>
     </ng-container>
 
     <!-- Image Column -->
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef > Image </th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="editingElementId !== element._id; else editImage">
           <img [src]="element.image" alt="{{element.title}}" class="img">
-        </ng-container>
-        <ng-template #editImage>
-          <input matInput [(ngModel)]="editedData.image">
-        </ng-template>
       </td>
     </ng-container>
 
@@ -42,29 +30,18 @@
         <ng-container [matColumnDef]="column" class="dynamic-columns">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnDefs[column] }} </th>
           <td mat-cell *matCellDef="let element" class="dynamic-td">
-            <ng-container *ngIf="editingElementId !== element._id; else editField">
-              {{ getElementVal(element, column) || element[column] }}
-            </ng-container>
-            <ng-template #editField>
-              <input matInput [(ngModel)]="editedData[column]">
-            </ng-template>
+            {{ getElementVal(element, column) || element[column] }}
           </td>
         </ng-container>
       </ng-container>
     </ng-container>
 
     <!-- Action buttons column -->
-    <ng-container matColumnDef="actions" class="button-container">
-      <th mat-header-cell *matHeaderCellDef> </th>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
       <td mat-cell *matCellDef="let element">
-        <ng-container *ngIf="editingElementId !== element._id; else editActions">
-          <button mat-button color="primary" (click)="edit(element)">Edit</button>
-          <button mat-button color="warn" (click)="delete(element._id)">Delete</button>
-        </ng-container>
-        <ng-template #editActions>
-          <button mat-button color="primary" (click)="saveEdit()">Save</button>
-          <button mat-button color="warn" (click)="cancelEdit()">Cancel</button>
-        </ng-template>
+        <button mat-button color="primary" (click)="edit(element)">Edit</button>
+        <button mat-button color="warn" (click)="delete(element._id)">Delete</button>
       </td>
     </ng-container>
 
